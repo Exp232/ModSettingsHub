@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- The button's icon has thinner lines (about 30% less ink), measured against the game's other top-right icons.
+
 ## 1.0.2
 
 - The button's icon uses the same cream colour as the game's other top-right icons (it was white).

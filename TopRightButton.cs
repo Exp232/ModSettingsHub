@@ -136,7 +136,7 @@ namespace ModSettingsHub
             if (_icon != null) return _icon;
 
             const int size = 64;
-            const float stroke = 1.6f;   // half the line width, in texture pixels
+            const float stroke = 1.1f;   // half the line width, in texture pixels
             const float ring = 6.5f;     // knob radius (centre of the line)
             var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
             tex.filterMode = FilterMode.Bilinear;

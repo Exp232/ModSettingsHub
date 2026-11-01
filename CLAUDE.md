@@ -12,4 +12,5 @@ A mod for Railroader's built-in mod loader (Unity/Mono, game 0.6.x; entry point 
 - The hub owns no mod's values: mods save their own settings.
 - The mod must never be listed as a dependency of another mod (load-order trouble); links are by reflection in both load orders.
 - The top-right button copies a button from the game's `TopRightArea` (serialized private fields `timetableButton` / `tutorialButton`). If that fails it must only log, never throw.
+- Never use a version number that also appears in the csproj (the package reference `Microsoft.NETFramework.ReferenceAssemblies` is 1.0.3): Build Watcher swaps the new version for the old one everywhere in the csproj, so the project then looks changed and the import waits for review.
 - When changing behaviour or a setting, bump the version in `Info.json`, `BUILDING.md` and the csproj together and add a `CHANGELOG.md` entry (newest first, under `# Changelog`). Update `README.md` for user-visible changes.

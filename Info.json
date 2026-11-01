@@ -2,7 +2,7 @@
   "identifier": "exp232/modsettingshub",
   "name": "Mod Settings Hub",
   "author": "Exp232",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "One window, one hotkey and one top-right button for the settings of all your mods. Mods add their page to it; a mod that supports it works the same without it.",
   "url": "https://github.com/Exp232/ModSettingsHub",
   "scope": "optional",

@@ -127,37 +127,47 @@ namespace ModSettingsHub
             return info.GetValue(owner) as Button;
         }
 
-        /// <summary>Three slider tracks with a knob each, drawn in white so the button's own tint applies.</summary>
+        /// <summary>
+        /// Three slider tracks with a ring-shaped knob each, drawn as thin white lines like the game's own outline
+        /// icons (white, so the button's own tint applies).
+        /// </summary>
         private static Sprite Icon()
         {
             if (_icon != null) return _icon;
 
             const int size = 64;
+            const float stroke = 1.6f;   // half the line width, in texture pixels
+            const float ring = 6.5f;     // knob radius (centre of the line)
             var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
             tex.filterMode = FilterMode.Bilinear;
             tex.wrapMode = TextureWrapMode.Clamp;
 
-            float[] trackY = { 46f, 32f, 18f };
+            float[] trackY = { 47f, 32f, 17f };
             float[] knobX = { 22f, 42f, 30f };
             var pixels = new Color32[size * size];
             for (int y = 0; y < size; y++)
             {
                 for (int x = 0; x < size; x++)
                 {
+                    float px = x + 0.5f;
+                    float py = y + 0.5f;
                     float coverage = 0f;
                     for (int i = 0; i < 3; i++)
                     {
-                        // Track: a 4 px line from x=8 to x=56.
-                        float cx = Mathf.Clamp(x + 0.5f, 8f, 56f);
-                        float dx = x + 0.5f - cx;
-                        float dy = y + 0.5f - trackY[i];
-                        float lineDist = Mathf.Sqrt(dx * dx + dy * dy);
-                        coverage = Mathf.Max(coverage, Mathf.Clamp01(2.5f - lineDist));
+                        float dy = py - trackY[i];
+                        float dx = px - knobX[i];
 
-                        // Knob: a disc of radius 6.
-                        float kx = x + 0.5f - knobX[i];
-                        float knobDist = Mathf.Sqrt(kx * kx + dy * dy);
-                        coverage = Mathf.Max(coverage, Mathf.Clamp01(6.5f - knobDist));
+                        // Track: a line from x=6 to x=58, left open around the knob.
+                        if (Mathf.Abs(dx) > ring + stroke + 1f)
+                        {
+                            float cx = Mathf.Clamp(px, 6f, 58f);
+                            float lineDist = Mathf.Sqrt((px - cx) * (px - cx) + dy * dy);
+                            coverage = Mathf.Max(coverage, Mathf.Clamp01(stroke + 0.5f - lineDist));
+                        }
+
+                        // Knob: a ring.
+                        float knobDist = Mathf.Sqrt(dx * dx + dy * dy);
+                        coverage = Mathf.Max(coverage, Mathf.Clamp01(stroke + 0.5f - Mathf.Abs(knobDist - ring)));
                     }
                     pixels[y * size + x] = new Color32(255, 255, 255, (byte)Mathf.RoundToInt(coverage * 255f));
                 }

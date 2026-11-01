@@ -16,7 +16,7 @@ namespace ModSettingsHub
     }
 
     /// <summary>
-    /// The public API of Mod Settings Hub (API version 1). Other mods call it by reflection (see HubLink.Template.cs),
+    /// The public API of Mod Settings Hub (API version 1). Other mods call it by reflection (see HubLinkTemplate.cs),
     /// so they need no reference to this assembly and still work when it is not installed. Keep these signatures
     /// stable: add overloads, never change or remove one.
     /// </summary>
@@ -68,33 +68,8 @@ namespace ModSettingsHub
             return !string.IsNullOrEmpty(id) && Entries.ContainsKey(id);
         }
 
-        /// <summary>
-        /// For a mod's own hotkey or button: opens the hub on that mod's page, or closes the hub when that page is
-        /// already showing. Returns false when the hub could not handle it (the mod is not registered, or the game's
-        /// window system is not up), so the caller can open its own window instead.
-        /// </summary>
-        public static bool ToggleFor(string id)
-        {
-            try
-            {
-                var windows = WindowManager.Shared;
-                if (windows == null || !IsRegistered(id)) return false;
-                if (windows.IsWindowOpen(WindowId) && string.Equals(Selected.Value, id, StringComparison.OrdinalIgnoreCase))
-                {
-                    windows.CloseWindow(WindowId);
-                    return true;
-                }
-                return Open(id);
-            }
-            catch (Exception e)
-            {
-                Main.Warn("ToggleFor failed: " + e.Message);
-                return false;
-            }
-        }
-
-        /// <summary>Opens the hub, on the given mod's page when it is registered (any page otherwise).</summary>
-        public static bool Open(string id)
+        // Opens the hub, on the given mod's page when it is registered (the page last shown otherwise).
+        private static bool Open(string id)
         {
             try
             {

@@ -10,10 +10,8 @@ brought its own window and its own hotkey. This is that place.
 Unzip into `Documents\Railroader\Mods` so you have `Mods\ModSettingsHub`. Mods that support the hub show up in its list
 by themselves. A mod that supports the hub also works without it: it just opens its own window, as before.
 
-Currently supported: [Auto Engineer Brake Fix](https://github.com/Exp232/AutoEngineerBrakeFix) 2.8.0 and later,
-[College-Educated Spouts](https://github.com/Exp232/CollegeEducatedSpouts) 1.1.0 and later.
-
-With the hub installed, a supporting mod's own hotkey (for example Ctrl+F9) opens the hub on that mod's page.
+Currently supported: [Auto Engineer Brake Fix](https://github.com/Exp232/AutoEngineerBrakeFix) 2.8.1 and later,
+[College-Educated Spouts](https://github.com/Exp232/CollegeEducatedSpouts) 1.1.1 and later.
 
 `Settings.xml` in the mod folder:
 
@@ -25,7 +23,7 @@ With the hub installed, a supporting mod's own hotkey (for example Ctrl+F9) open
 ## For mod authors
 No reference to this mod is needed, and your mod keeps working when it is not installed.
 
-1. Copy `HubLink.Template.cs` into your source and change its namespace.
+1. Copy `HubLinkTemplate.cs` into your source, delete its `#if` and `#endif` lines (they keep the template out of the hub's own build) and change its namespace.
 2. Make a method that draws your page with the game's panel builder. The hub has already put it inside a scroll view, so
    do not add one:
 
@@ -38,7 +36,6 @@ No reference to this mod is needed, and your mod keeps working when it is not in
    ```
 3. In your load method: `HubLink.Register("yourname/yourmod", "My Mod", version, SettingsUi.BuildPage);`
    and in your unload method: `HubLink.Unregister();`
-4. Where your own hotkey opened your window, start with `if (HubLink.Toggle()) return;`.
 
 Do not put the hub in your Info.json dependencies. It is found when it loads, in either order, and a dependency would
 only add a load-order constraint.
@@ -48,7 +45,7 @@ settings yourself (the hub owns no values). If your page throws, the hub shows t
 rest of the window keeps working.
 
 API version 1 (`ModSettingsHub.Hub`, found by reflection): `Register(id, title, version, build)`, `Unregister(id)`,
-`IsRegistered(id)`, `ToggleFor(id)` (true if the hub handled it), `Open(id)`, `Toggle()`, `Refresh()`. Existing
+`IsRegistered(id)`, `Toggle()`, `Refresh()`. Existing
 signatures never change; new ones arrive as overloads. If you do reference the assembly, `HubUi` has `Note`, `Slider`
 and `Toggle` helpers.
 

@@ -8,7 +8,7 @@ A mod for Railroader's built-in mod loader (Unity/Mono, game 0.6.x; entry point 
 - Your usual job here: build, read compile errors, fix them minimally without changing behaviour, repeat until clean.
 
 ## Conventions
-- `Hub` (Hub.cs) is public API that other mods call by reflection (`HubLink.Template.cs`): keep existing signatures stable, add overloads instead. Bump `ApiVersion` only for a breaking change.
+- `Hub` (Hub.cs) is public API (`Register`, `Unregister`, `IsRegistered`, `Toggle`, `Refresh`) that other mods call by reflection (`HubLinkTemplate.cs`): keep existing signatures stable, add overloads instead. Bump `ApiVersion` only for a breaking change.
 - The hub owns no mod's values: mods save their own settings.
 - The mod must never be listed as a dependency of another mod (load-order trouble); links are by reflection in both load orders.
 - The top-right button copies a button from the game's `TopRightArea` (serialized private fields `timetableButton` / `tutorialButton`). If that fails it must only log, never throw.

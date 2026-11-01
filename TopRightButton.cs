@@ -128,8 +128,8 @@ namespace ModSettingsHub
         }
 
         /// <summary>
-        /// Three slider tracks with a ring-shaped knob each, drawn as thin white lines like the game's own outline
-        /// icons (white, so the button's own tint applies).
+        /// Three slider tracks with a ring-shaped knob each, drawn as thin lines like the game's own outline icons,
+        /// in their cream colour (the game's icons have it in the sprite; the button itself does not tint).
         /// </summary>
         private static Sprite Icon()
         {
@@ -169,7 +169,7 @@ namespace ModSettingsHub
                         float knobDist = Mathf.Sqrt(dx * dx + dy * dy);
                         coverage = Mathf.Max(coverage, Mathf.Clamp01(stroke + 0.5f - Mathf.Abs(knobDist - ring)));
                     }
-                    pixels[y * size + x] = new Color32(255, 255, 255, (byte)Mathf.RoundToInt(coverage * 255f));
+                    pixels[y * size + x] = new Color32(211, 204, 190, (byte)Mathf.RoundToInt(coverage * 255f));
                 }
             }
             tex.SetPixels32(pixels);

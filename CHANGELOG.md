@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- The button's icon uses the same cream colour as the game's other top-right icons (it was white).
+
 ## 1.0.1
 
 - The button's icon is drawn in thin outline like the game's own icons (hollow knobs instead of solid ones).

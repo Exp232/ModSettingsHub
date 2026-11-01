@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+First public release (Nexus Mods). Complete user documentation: install and update steps, uninstall, using the window, every setting, troubleshooting, multiplayer and compatibility notes, and a guide for mod authors. No change to the mod itself since 1.0.4.
+
 ## 1.0.4
 
 - The button's icon has thinner lines (about 30% less ink), measured against the game's other top-right icons.

@@ -4,10 +4,17 @@
 # publishes a GitHub release whose tag is the version (v1.1.0) with ModSettingsHub-<version>.zip attached and the
 # changelog as release notes. Publishing the release runs this workflow. It can also be run by hand from the Actions tab.
 #
-# One-time setup in the repo's Settings > Secrets and variables > Actions (the publish script can set the variables):
+# One-time setup in the repo's Settings > Secrets and variables > Actions:
 #   Secret    NEXUSMODS_API_KEY   your personal Nexus API key
-#   Variable  NEXUSMODS_MOD_ID    the mod page's ID
-#   Variable  NEXUSMODS_FILE_ID   the Main file's File ID (Files tab > Advanced, or the edit menu on Manage files)
+#   Variable  NEXUSMODS_MOD_ID    the mod's global "Unique Mod ID" (25692494366649), NOT the 1977 in the page URL;
+#                                 the v3 API answers "Mod not found" for the URL number, so the changelog step fails
+#   Variable  NEXUSMODS_FILE_ID   the Main file's File ID (8292630)
+#
+# Where the IDs are kept:
+#   - Mod page > Files tab > "Advanced" on any file > API section: "File ID" and "Unique Mod ID".
+#   - https://api.nexusmods.com/v3/games/railroader/mods/1977 (no key needed): "id" is the Unique Mod ID;
+#     "game_scoped_id" is the URL number.
+#   - The mod page's HTML source, as mod_uid / mod-uid.
 name: Upload to Nexus Mods
 
 on:

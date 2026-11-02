@@ -37,7 +37,7 @@ Railroader 0.6.0 or later (the game's built-in mod loader; Unity Mod Manager is 
 [*][url=https://github.com/Exp232/AutoEngineerBrakeFix]Auto Engineer Brake Fix[/url] 2.8.1 and later
 [*][url=https://github.com/Exp232/CollegeEducatedSpouts]College-Educated Spouts[/url] 1.1.1 and later
 [/list]
-Their own hotkeys (Ctrl+F8 and Ctrl+F9) still open their own windows.
+Their own hotkeys (Ctrl+F8 and Ctrl+F9) still open their own windows. Mods written in Relay (scripts) can add a page too, see "For mod authors".
 
 [size=4][b]Install[/b][/size]
 [list=1]
@@ -80,11 +80,14 @@ Needs Railroader 0.6.0 or later (tested with 0.6.2). Works next to any other mod
 [size=4][b]For mod authors[/b][/size]
 Supporting the hub takes a few lines and no reference to this mod, and your mod keeps working when it is not installed: copy one small file into your source, register a method that draws your settings page with the game's own panel builder, and unregister it on unload. Do not list the hub in your mod's dependencies. Full guide, example and API on GitHub: https://github.com/Exp232/ModSettingsHub
 
+[b]Relay mods[/b] need no file and no call: create a window whose identifier starts with [b]modsettings/[/b] (for example ui.createWindow("modsettings/yourname/yourmod", "My Mod", buildPage)) and the hub lists it and draws it inside its window. Example on GitHub.
+
 [size=4][b]Source[/b][/size]
 https://github.com/Exp232/ModSettingsHub
 ```
 
 ## Changelog entry for the first file
+1.2.0: Relay mods can add a settings page: a window whose identifier starts with modsettings/ is listed in the hub. No change for other mods.
 1.1.0: First public release.
 
 ## File

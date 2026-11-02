@@ -9,6 +9,7 @@ A mod for Railroader's built-in mod loader (Unity/Mono, game 0.6.x; entry point 
 
 ## Conventions
 - `Hub` (Hub.cs) is public API (`Register`, `Unregister`, `IsRegistered`, `Toggle`, `Refresh`) that other mods call by reflection (`HubLinkTemplate.cs`): keep existing signatures stable, add overloads instead. Bump `ApiVersion` only for a breaking change.
+- Relay mods join without calling the hub: `Hub.RelayEntries()` lists the game's custom windows whose identifier starts with `modsettings/` (`WindowManager.GetAllIdentifiers/GetDefinition`, `CustomWindowDefinition.BuilderAction`) and runs their builder on the hub's own builder. It uses game types outside `Railroader.Modding`, so look at it first when a game update breaks the hub.
 - The hub owns no mod's values: mods save their own settings.
 - The mod must never be listed as a dependency of another mod (load-order trouble); links are by reflection in both load orders.
 - The top-right button copies a button from the game's `TopRightArea` (serialized private fields `timetableButton` / `tutorialButton`). If that fails it must only log, never throw.

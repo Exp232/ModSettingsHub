@@ -47,8 +47,9 @@ go back to using their own windows. The hub leaves nothing behind in your saves.
 - [Auto Engineer Brake Fix](https://github.com/Exp232/AutoEngineerBrakeFix) 2.8.1 and later
 - [College-Educated Spouts](https://github.com/Exp232/CollegeEducatedSpouts) 1.1.1 and later
 
-Their own hotkeys (Ctrl+F8 and Ctrl+F9) still open their own windows. Authors of other mods: see below, it is a few lines
-of code.
+Their own hotkeys (Ctrl+F8 and Ctrl+F9) still open their own windows. Mods written in Relay (scripts) can add a page too,
+without any code in the hub: see "For Relay mod authors" below. Authors of other mods: see below, it is a few lines of
+code.
 
 ## Settings
 The hub's own settings are on its page in the window. Everything is in `Settings.xml` in the mod folder (created the first
@@ -70,7 +71,8 @@ the hub says so in the log and runs on its defaults without touching the file; d
   Mods > Manage Mods. Another mod or program may use the same key; change `Hotkey` in `Settings.xml`.
 - **The window is empty ("No mod has added its settings here yet"):** none of your mods supports the hub, or they are
   switched off. The hub's own page is always there when the mod is on.
-- **A mod I expected is not in the list:** it has to support the hub (see the list above) and be switched on. Also check
+- **A mod I expected is not in the list:** it has to support the hub (see the list above; a Relay mod must name its window
+  `modsettings/...`) and be switched on. Also check
   that it is a version that supports it: the hub does not need updating for that, the mod does.
 - **There is no button in the top-right menu:** use the hotkey. The button is added by copying one of the game's menu
   buttons, so a game update that changes that menu may leave the hotkey as the only way in. Make sure
@@ -123,6 +125,36 @@ reference the assembly, `HubUi` has `Note`, `Slider` and `Toggle` helpers.
 
 [College-Educated Spouts](https://github.com/Exp232/CollegeEducatedSpouts) is the smallest worked example: see
 `HubLink.cs`, the `HubLink.Register` call in `Main.cs`, and `BuildPage` in `SettingsUi.cs`.
+
+## For Relay mod authors
+Mods written in Relay (a `Main.rl` script, no DLL) need no file copied and no call to the hub. Make an ordinary window
+whose identifier starts with `modsettings/` and the hub lists it and draws it inside its own window:
+
+```
+from railroader import ui
+
+var state = {"enabled": true}
+
+func buildPage(builder) {
+    builder.title("My Mod", "settings")
+    builder.section("Options", (b) => {
+        b.fieldToggle("Enabled", () => state["enabled"], (value) => { state["enabled"] = value })
+    })
+}
+
+func onWorldLoad(context) {
+    ui.createWindow("modsettings/yourname/yourmod", "My Mod", buildPage)
+}
+```
+
+- Use your pack's identifier after the prefix (`modsettings/yourname/yourmod`) so the window name is unique.
+- The title you give the window is the name in the hub's list. Nothing else is needed, and the mod works the same when the
+  hub is not installed (the window is just an ordinary window that your own button or command can open).
+- The hub draws your builder inside its scroll view, so do not add one of your own. Use `builder.setNeedsRebuild()` as in
+  any window; it rebuilds the hub window.
+- Relay windows are forgotten on a map change and made again when `Main.rl` runs. The hub looks for them each time its
+  window is built, so nothing needs re-registering.
+- Pages made this way show no version number in the list, and there is no hub hotkey tied to them (Relay has none).
 
 ## Credits
 By Exp232. The window is built with the game's own interface builder, so it looks like the rest of the game.

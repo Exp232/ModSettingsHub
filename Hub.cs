@@ -27,6 +27,13 @@ namespace ModSettingsHub
 
         internal const string WindowId = "exp232.modsettingshub.window";
 
+        /// <summary>
+        /// A Relay mod (a Main.rl script) joins the hub without any call to it: it creates an ordinary window with
+        /// <c>ui.createWindow("modsettings/yourname/yourmod", "My Mod", builder)</c> and the hub lists every window whose
+        /// identifier starts with this prefix, drawing its builder inside the hub window.
+        /// </summary>
+        internal const string RelayPrefix = "modsettings/";
+
         private static readonly Dictionary<string, HubEntry> Entries = new Dictionary<string, HubEntry>(StringComparer.OrdinalIgnoreCase);
         private static readonly UIState<string> Selected = new UIState<string>(null);
 
@@ -138,7 +145,50 @@ namespace ModSettingsHub
 
         internal static IEnumerable<HubEntry> All()
         {
-            return Entries.Values.OrderBy(e => e.Title, StringComparer.OrdinalIgnoreCase).ToList();
+            return Entries.Values.Concat(RelayEntries()).OrderBy(e => e.Title, StringComparer.OrdinalIgnoreCase).ToList();
+        }
+
+        // Windows made by Relay scripts under the agreed prefix. Looked up again on every build: the game forgets them
+        // on a map change and the scripts make them again when they run.
+        private static List<HubEntry> RelayEntries()
+        {
+            var found = new List<HubEntry>();
+            try
+            {
+                var windows = WindowManager.Shared;
+                if (windows == null) return found;
+                foreach (var identifier in windows.GetAllIdentifiers().ToList())
+                {
+                    if (string.IsNullOrEmpty(identifier)) continue;
+                    if (!identifier.StartsWith(RelayPrefix, StringComparison.OrdinalIgnoreCase)) continue;
+                    if (Entries.ContainsKey(identifier)) continue;
+                    var definition = windows.GetDefinition(identifier) as CustomWindowDefinition;
+                    if (definition == null || definition.BuilderAction == null) continue;
+
+                    string id = identifier;
+                    found.Add(new HubEntry
+                    {
+                        Id = id,
+                        Title = string.IsNullOrWhiteSpace(definition.Title) ? id.Substring(RelayPrefix.Length) : definition.Title,
+                        Version = null,
+                        Build = page =>
+                        {
+                            var current = WindowManager.Shared == null ? null : WindowManager.Shared.GetDefinition(id) as CustomWindowDefinition;
+                            if (current == null || current.BuilderAction == null)
+                            {
+                                page.AddLabel("This page is no longer available.");
+                                return;
+                            }
+                            current.BuilderAction(page);
+                        },
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                Main.Warn("Looking for Relay pages failed: " + e.Message);
+            }
+            return found;
         }
 
         internal static void Shutdown()
@@ -184,7 +234,7 @@ namespace ModSettingsHub
                     return;
                 }
 
-                if (string.IsNullOrEmpty(Selected.Value) || !Entries.ContainsKey(Selected.Value))
+                if (string.IsNullOrEmpty(Selected.Value) || !items.Any(i => string.Equals(i.Identifier, Selected.Value, StringComparison.OrdinalIgnoreCase)))
                 {
                     Selected.Value = items[0].Identifier;
                 }

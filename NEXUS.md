@@ -87,6 +87,7 @@ https://github.com/Exp232/ModSettingsHub
 ```
 
 ## Changelog entry for the first file
+1.2.1: The log shows mods that joined the hub before it started. No other change.
 1.2.0: Relay mods can add a settings page: a window whose identifier starts with modsettings/ is listed in the hub. No change for other mods.
 1.1.0: First public release.
 

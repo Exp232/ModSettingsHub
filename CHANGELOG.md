@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- The log now shows mods that joined the hub before it had started (AutoEngineerBrakeFix and CollegeEducatedSpouts load first, so their "Registered ..." lines were missing). Those lines are written when the hub starts, marked "(before the hub started)". No change to behaviour.
+
 ## 1.2.0
 
 - **Relay mods can add a settings page.** A mod written in Relay (a `Main.rl` script) makes an ordinary window whose identifier starts with `modsettings/`, for example `ui.createWindow("modsettings/yourname/yourmod", "My Mod", buildPage)`. The hub lists it and draws its builder inside the hub window. No call to the hub and no dependency on it, so the mod works the same when the hub is not installed. The hub looks for these windows each time its window is built, so they come back after a map change like any other Relay window.

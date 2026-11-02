@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Railroader.Modding;
@@ -46,19 +47,30 @@ namespace ModSettingsHub
             get { return Path.Combine(_dir, "Settings.xml"); }
         }
 
+        // Mods that start before the hub register before it has a logger; keep their lines and write them once it has.
+        private static readonly List<KeyValuePair<bool, string>> Early = new List<KeyValuePair<bool, string>>();
+
         internal static void Log(string message)
         {
             if (_log != null) _log.Info(message);
+            else Early.Add(new KeyValuePair<bool, string>(false, message));
         }
 
         internal static void Warn(string message)
         {
             if (_log != null) _log.Warning(message);
+            else Early.Add(new KeyValuePair<bool, string>(true, message));
         }
 
         internal static void Load(IModContext context)
         {
             _log = context.Log;
+            foreach (var line in Early)
+            {
+                if (line.Key) _log.Warning(line.Value + " (before the hub started)");
+                else _log.Info(line.Value + " (before the hub started)");
+            }
+            Early.Clear();
             _dir = context.ModDirectory;
             _version = ReadVersion(_dir);
 

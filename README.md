@@ -44,7 +44,7 @@ go back to using their own windows. The hub leaves nothing behind in your saves.
   using the hub.
 
 ### Which mods support it
-- [Auto Engineer Brake Fix](https://github.com/Exp232/AutoEngineerBrakeFix) 2.8.1 and later
+- [College Educated Auto Engineer](https://github.com/Exp232/CollegeEducatedAutoEngineer) 1.0.0 and later
 - [College-Educated Spouts](https://github.com/Exp232/CollegeEducatedSpouts) 1.1.1 and later
 
 Their own hotkeys (Ctrl+F8 and Ctrl+F9) still open their own windows. Mods written in Relay (scripts) can add a page too,

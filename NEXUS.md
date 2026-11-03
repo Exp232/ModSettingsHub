@@ -34,7 +34,7 @@ Railroader 0.6.0 or later (the game's built-in mod loader; Unity Mod Manager is 
 
 [size=4][b]Mods that support it[/b][/size]
 [list]
-[*][url=https://github.com/Exp232/AutoEngineerBrakeFix]Auto Engineer Brake Fix[/url] 2.8.1 and later
+[*][url=https://github.com/Exp232/CollegeEducatedAutoEngineer]College Educated Auto Engineer[/url] 1.0.0 and later
 [*][url=https://github.com/Exp232/CollegeEducatedSpouts]College-Educated Spouts[/url] 1.1.1 and later
 [/list]
 Their own hotkeys (Ctrl+F8 and Ctrl+F9) still open their own windows. Mods written in Relay (scripts) can add a page too, see "For mod authors".

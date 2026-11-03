@@ -1,6 +1,6 @@
 # ModSettingsHub - notes for Claude Code
 
-A mod for Railroader's built-in mod loader (Unity/Mono, game 0.6.x; entry point `ModEntryPoint` in Main.cs, asset-pack Info.json, settings in Settings.xml): one window, hotkey and top-right button for the settings of all mods. Namespace `ModSettingsHub`, author Exp232. Used (optionally, by reflection) by Auto Engineer Brake Fix and College-Educated Spouts.
+A mod for Railroader's built-in mod loader (Unity/Mono, game 0.6.x; entry point `ModEntryPoint` in Main.cs, asset-pack Info.json, settings in Settings.xml): one window, hotkey and top-right button for the settings of all mods. Namespace `ModSettingsHub`, author Exp232. Used (optionally, by reflection) by College Educated Auto Engineer and College-Educated Spouts.
 
 ## Build
 - `dotnet build -c Release /p:DeployToGame=false` compiles against the game's DLLs (`RailroaderDir` in the csproj, or `/p:RailroaderDir=...`).

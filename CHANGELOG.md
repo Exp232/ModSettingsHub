@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2
+
+- **Optional fallback window for mod authors.** New template file `HubFallbackTemplate.cs`: a mod that copies it can give players without the hub a window and a hotkey of its own for the same settings page (`HubFallback.Enable("yourname/yourmod", "My Mod", BuildPage, "<Keyboard>/f9", ctrl: true)`). When the hub is installed it does nothing and the hub shows the page, so nothing is doubled. The hub itself is unchanged.
+- Old copies of `HubLink.Template.cs` (the name used before 1.1.0) are not part of the project and can be deleted from a checkout. `HubLinkTemplate.cs` is the current file.
+
 ## 1.2.1
 
 - The log now shows mods that joined the hub before it had started (AutoEngineerBrakeFix and CollegeEducatedSpouts load first, so their "Registered ..." lines were missing). Those lines are written when the hub starts, marked "(before the hub started)". No change to behaviour.

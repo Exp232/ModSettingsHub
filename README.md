@@ -44,7 +44,7 @@ go back to using their own windows. The hub leaves nothing behind in your saves.
   using the hub.
 
 ### Which mods support it
-- [College Educated Auto Engineer](https://github.com/Exp232/CollegeEducatedAutoEngineer) 1.0.0 and later
+- [Auto Engineer Brake Fix](https://github.com/Exp232/AutoEngineerBrakeFix) 2.8.1 and later
 - [College-Educated Spouts](https://github.com/Exp232/CollegeEducatedSpouts) 1.1.1 and later
 
 Their own hotkeys (Ctrl+F8 and Ctrl+F9) still open their own windows. Mods written in Relay (scripts) can add a page too,
@@ -111,6 +111,17 @@ No reference to this mod is needed, and your mod keeps working when it is not in
    ```
 3. In your load method: `HubLink.Register("yourname/yourmod", "My Mod", version, SettingsUi.BuildPage);`
    and in your unload method: `HubLink.Unregister();`
+
+Optional: players who do not have the hub can still get a window and a hotkey for your page. Also copy
+`HubFallbackTemplate.cs` (same steps: delete the `#if` and `#endif` lines, change the namespace; it needs a reference to
+`UnityEngine.InputSystem.dll`) and call, after `HubLink.Register`:
+
+```csharp
+HubFallback.Enable("yourname/yourmod", "My Mod", SettingsUi.BuildPage, "<Keyboard>/f9", ctrl: true);   // Ctrl+F9
+```
+
+and `HubFallback.Disable();` in your unload method. When the hub is installed this does nothing and the hub shows your
+page, so nothing is doubled.
 
 Do not put the hub in your Info.json dependencies. It is found when it loads, in either order, and a dependency would
 only add a load-order constraint (and a hard requirement for your players).

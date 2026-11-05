@@ -61,7 +61,7 @@
   <Target Name="PackageRelease" AfterTargets="Build" Condition="'$(Package)' == 'true'">
     <PropertyGroup>
       <StageDir>$(MSBuildProjectDirectory)\dist\stage\ModSettingsHub</StageDir>
-      <ReleaseVersion Condition="'$(ReleaseVersion)' == ''">1.2.1</ReleaseVersion>
+      <ReleaseVersion Condition="'$(ReleaseVersion)' == ''">1.2.2</ReleaseVersion>
     </PropertyGroup>
     <RemoveDir Directories="$(MSBuildProjectDirectory)\dist" />
     <MakeDir Directories="$(StageDir)" />

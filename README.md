@@ -90,7 +90,7 @@ on a server whether or not the host or the other players have it. (Settings of o
 rules; the hub just shows their pages.)
 
 ## Compatibility
-- Needs Railroader 0.6.0 or later. Tested with 0.6.2.
+- Needs Railroader 0.6.0 or later. Tested with 0.6.3.
 - Works next to any other mod. It adds one object to the top-right menu and does not patch the game's code.
 - If a future game update changes the top-right menu, the button may not appear; the hotkey and the window are not affected.
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.3
+
+- A mod's page now stays where you scrolled it when it redraws (switching a toggle, moving a slider, pressing a button), and each mod remembers its own position while the game runs. This uses a feature of Railroader 0.6.3; on 0.6.0 to 0.6.2 the page jumps to the top as before.
+- Tested with Railroader 0.6.3. No other change.
+
 ## 1.2.2
 
 - **Optional fallback window for mod authors.** New template file `HubFallbackTemplate.cs`: a mod that copies it can give players without the hub a window and a hotkey of its own for the same settings page (`HubFallback.Enable("yourname/yourmod", "My Mod", BuildPage, "<Keyboard>/f9", ctrl: true)`). When the hub is installed it does nothing and the hub shows the page, so nothing is doubled. The hub itself is unchanged.

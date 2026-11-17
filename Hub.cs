@@ -65,6 +65,7 @@ namespace ModSettingsHub
             if (Entries.Remove(id))
             {
                 Main.Log("Unregistered " + id);
+                HubScroll.Forget(id);
                 if (string.Equals(Selected.Value, id, StringComparison.OrdinalIgnoreCase)) Selected.Value = null;
                 Refresh();
             }
@@ -202,6 +203,7 @@ namespace ModSettingsHub
             {
             }
             Entries.Clear();
+            HubScroll.Clear();
             Selected.Value = null;
         }
 
@@ -255,7 +257,7 @@ namespace ModSettingsHub
                 return;
             }
 
-            detail.VScrollView(page =>
+            Action<UIPanelBuilder> draw = page =>
             {
                 try
                 {
@@ -267,7 +269,10 @@ namespace ModSettingsHub
                     page.AddTitle(entry.Title, entry.Version ?? "");
                     page.AddLabel("This mod's settings page could not be built: " + e.Message);
                 }
-            });
+            };
+
+            // Railroader 0.6.3 and later keep the scroll position across a rebuild; older versions draw it plainly.
+            if (!HubScroll.TryScroll(detail, entry.Id, draw)) detail.VScrollView(draw);
         }
     }
 

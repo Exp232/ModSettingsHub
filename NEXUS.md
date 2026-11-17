@@ -75,7 +75,7 @@ Settings.xml in the mod folder (created the first time the game runs with the mo
 [/list]
 
 [size=4][b]Compatibility[/b][/size]
-Needs Railroader 0.6.0 or later (tested with 0.6.2). Works next to any other mod: it adds one object to the top-right menu and does not patch the game's code.
+Needs Railroader 0.6.0 or later (tested with 0.6.3). Works next to any other mod: it adds one object to the top-right menu and does not patch the game's code.
 
 [size=4][b]For mod authors[/b][/size]
 Supporting the hub takes a few lines and no reference to this mod, and your mod keeps working when it is not installed: copy one small file into your source, register a method that draws your settings page with the game's own panel builder, and unregister it on unload. Do not list the hub in your mod's dependencies. Full guide, example and API on GitHub: https://github.com/Exp232/ModSettingsHub
@@ -87,6 +87,7 @@ https://github.com/Exp232/ModSettingsHub
 ```
 
 ## Changelog entry for the first file
+1.2.3: A page keeps its scroll position when it redraws (Railroader 0.6.3 and later). Tested with 0.6.3.
 1.2.2: New optional template file for mod authors (a fallback window and hotkey when the hub is not installed). No change for players.
 1.2.1: The log shows mods that joined the hub before it started. No other change.
 1.2.0: Relay mods can add a settings page: a window whose identifier starts with modsettings/ is listed in the hub. No change for other mods.
